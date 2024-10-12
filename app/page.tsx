@@ -6,18 +6,6 @@ import * as Separator from '@radix-ui/react-separator';
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <header className="fixed top-0 left-0 right-0 bg-white shadow-md z-50">
-        <nav className="container mx-auto px-6 py-4">
-          <ul className="flex justify-center space-x-8">
-            <li><Link href="/work" className="text-lg font-semibold hover:text-blue-600">Work</Link></li>
-            <li><Link href="/about" className="text-lg font-semibold hover:text-blue-600">About Us</Link></li>
-            <li><Link href="/news" className="text-lg font-semibold hover:text-blue-600">News</Link></li>
-            <li><Link href="/careers" className="text-lg font-semibold hover:text-blue-600">Careers</Link></li>
-            <li><Link href="/contact" className="text-lg font-semibold hover:text-blue-600">Contact</Link></li>
-          </ul>
-        </nav>
-      </header>
-
       <main className="pt-20">
         {/* Hero Section */}
         <section className="relative h-screen flex items-center justify-center">
@@ -69,37 +57,6 @@ export default function HomePage() {
           </div>
         </section>
       </main>
-
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="text-2xl font-semibold mb-4">ALPHA Platform</h3>
-              <p>Connecting influencers and brands worldwide.</p>
-            </div>
-            <div>
-              <h4 className="text-xl font-semibold mb-4">Office Locations</h4>
-              <ul>
-                <li>New York</li>
-                <li>London</li>
-                <li>Tokyo</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-xl font-semibold mb-4">Follow Us</h4>
-              <div className="flex space-x-4">
-                <a href="#" className="text-white hover:text-blue-400"><i className="fab fa-twitter"></i></a>
-                <a href="#" className="text-white hover:text-blue-600"><i className="fab fa-facebook"></i></a>
-                <a href="#" className="text-white hover:text-pink-600"><i className="fab fa-instagram"></i></a>
-                <a href="#" className="text-white hover:text-blue-800"><i className="fab fa-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-          <div className="mt-8 text-center">
-            <p>&copy; 2023 ALPHA Platform. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

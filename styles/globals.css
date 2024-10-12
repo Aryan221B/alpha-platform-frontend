@@ -25,3 +25,6 @@
     animation: bounce 2s infinite;
   }
   
+body {
+  padding-top: 64px; /* Adjust this value based on your header height */
+}

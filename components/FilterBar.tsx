@@ -13,3 +13,4 @@ const FilterBar: React.FC<FilterBarProps> = ({ onFilterChange }) => {
 };
 
 export default FilterBar;
+

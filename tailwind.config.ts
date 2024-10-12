@@ -12,6 +12,16 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        sans: [
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'San Francisco',
+          'Helvetica Neue',
+          'Arial',
+          'sans-serif'
+        ],
+      },
     },
   },
   plugins: [],

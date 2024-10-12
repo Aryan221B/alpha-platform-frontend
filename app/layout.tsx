@@ -20,8 +20,8 @@ export default function RootLayout({
       <body>
         <Providers>
           <Header />
-          {children}
-          <Footer logo="/path/to/your/logo.png" />
+          <main>{children}</main>
+          <Footer />
         </Providers>
       </body>
     </html>
