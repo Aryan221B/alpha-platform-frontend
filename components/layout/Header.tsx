@@ -59,21 +59,21 @@ function Header(): JSX.Element {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-4">
+          <nav className="hidden md:flex space-x-6">
             {categories.map((category) => (
               <DropdownMenu.Root key={category.name}>
-                <DropdownMenu.Trigger className="flex items-center text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium focus:bg-gray-700 focus:outline-none">
+                <DropdownMenu.Trigger className="flex items-center text-white hover:text-gray-300 px-3 py-2 text-base font-medium focus:outline-none">
                   {category.name} <ChevronDownIcon className="ml-1" />
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Portal>
-                  <DropdownMenu.Content className="bg-gray-800 text-white shadow-lg rounded-md p-4 w-[800px] mt-2 grid grid-cols-3 gap-8">
+                  <DropdownMenu.Content className="bg-black text-white shadow-lg rounded-md p-6 w-[800px] mt-2 grid grid-cols-3 gap-8">
                     {category.columns.map((column, index) => (
                       <div key={index}>
-                        <h3 className="font-semibold text-gray-300 mb-2">{column.title}</h3>
+                        <h3 className="font-semibold text-white text-lg mb-3">{column.title}</h3>
                         <ul className="space-y-2">
                           {column.items.map((item) => (
                             <li key={item}>
-                              <Link href={`/${category.name.toLowerCase()}/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-sm text-gray-300 hover:text-white transition-colors">
+                              <Link href={`/${category.name.toLowerCase()}/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-base text-gray-300 hover:text-white transition-colors">
                                 {item}
                               </Link>
                             </li>
@@ -96,8 +96,8 @@ function Header(): JSX.Element {
 
           {/* Authentication Links */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/login" className="text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</Link>
-            <Link href="/signup" className="bg-white text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors">Sign Up</Link>
+            <Link href="/login" className="text-white hover:text-gray-300 px-3 py-2 text-base font-medium">Login</Link>
+            <Link href="/signup" className="bg-white text-black px-4 py-2 rounded-md text-base font-medium hover:bg-gray-200 transition-colors">Sign Up</Link>
           </div>
         </div>
       </div>
