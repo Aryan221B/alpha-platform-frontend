@@ -5,8 +5,11 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import * as HoverCard from '@radix-ui/react-hover-card';
 import { ChevronDownIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
+import dynamic from 'next/dynamic';
+
+const DropdownContent = dynamic(() => import('./DropdownContent'), { ssr: false });
 
 const categories = [
   {
@@ -61,29 +64,21 @@ function Header(): JSX.Element {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-6">
             {categories.map((category) => (
-              <DropdownMenu.Root key={category.name}>
-                <DropdownMenu.Trigger className="flex items-center text-white hover:text-gray-300 px-3 py-2 text-base font-medium focus:outline-none">
-                  {category.name} <ChevronDownIcon className="ml-1" />
-                </DropdownMenu.Trigger>
-                <DropdownMenu.Portal>
-                  <DropdownMenu.Content className="bg-black text-white shadow-lg rounded-md p-6 w-[800px] mt-2 grid grid-cols-3 gap-8">
-                    {category.columns.map((column, index) => (
-                      <div key={index}>
-                        <h3 className="font-semibold text-white text-lg mb-3">{column.title}</h3>
-                        <ul className="space-y-2">
-                          {column.items.map((item) => (
-                            <li key={item}>
-                              <Link href={`/${category.name.toLowerCase()}/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-base text-gray-300 hover:text-white transition-colors">
-                                {item}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </DropdownMenu.Content>
-                </DropdownMenu.Portal>
-              </DropdownMenu.Root>
+              <HoverCard.Root key={category.name} openDelay={100} closeDelay={300}>
+                <HoverCard.Trigger asChild>
+                  <button className="flex items-center text-white hover:text-gray-300 px-3 py-2 text-base font-medium focus:outline-none relative group">
+                    {category.name}
+                    <ChevronDownIcon className="ml-1" />
+                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out"></span>
+                  </button>
+                </HoverCard.Trigger>
+                <HoverCard.Portal>
+                  <HoverCard.Content className="bg-black text-white shadow-lg rounded-md p-6 w-[800px] mt-2" sideOffset={5}>
+                    <DropdownContent category={category} />
+                    <HoverCard.Arrow className="fill-black" />
+                  </HoverCard.Content>
+                </HoverCard.Portal>
+              </HoverCard.Root>
             ))}
           </nav>
 
@@ -96,7 +91,10 @@ function Header(): JSX.Element {
 
           {/* Authentication Links */}
           <div className="hidden md:flex items-center space-x-4">
-            <Link href="/login" className="text-white hover:text-gray-300 px-3 py-2 text-base font-medium">Login</Link>
+            <Link href="/login" className="text-white hover:text-gray-300 px-3 py-2 text-base font-medium relative group">
+              Login
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out"></span>
+            </Link>
             <Link href="/signup" className="bg-white text-black px-4 py-2 rounded-md text-base font-medium hover:bg-gray-200 transition-colors">Sign Up</Link>
           </div>
         </div>
