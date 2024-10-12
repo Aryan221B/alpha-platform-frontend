@@ -1,4 +1,6 @@
-// components/Header.js
+'use client';
+
+// components/Header.tsx
 
 import React from 'react';
 import Link from 'next/link';
@@ -15,7 +17,7 @@ const categories = [
   { name: 'Travel', href: '/category/travel' },
 ];
 
-function Header() {
+function Header(): JSX.Element {
   return (
     <header className="bg-background shadow">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
