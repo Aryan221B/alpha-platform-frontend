@@ -55,6 +55,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    padding-top: 64px; /* Adjust this value based on your header height */
   }
 }
 
@@ -120,5 +121,17 @@
   }
   .text-foreground {
     color: theme('colors.foreground');
+  }
+}
+
+@media (min-width: 640px) {
+  body {
+    padding-top: 60px;
+  }
+}
+
+@media (min-width: 768px) {
+  body {
+    padding-top: 64px;
   }
 }

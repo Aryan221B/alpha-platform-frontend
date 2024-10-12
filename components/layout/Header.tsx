@@ -10,29 +10,40 @@ import { ChevronDownIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
 
 const categories = [
   {
-    name: 'Star-Casting',
-    subcategories: [
-      { title: 'Explore', items: ['Featured Stars', 'Rising Talents', 'Genres'] },
-      { title: 'Services', items: ['Casting Calls', 'Talent Management', 'Star Workshops'] },
-      { title: 'More from Star-Casting', items: ['Success Stories', 'Industry News', 'FAQs'] },
+    name: 'Brands',
+    columns: [
+      {
+        title: 'Shop',
+        items: ['Shop the Latest', 'Mac', 'iPad', 'iPhone', 'Apple Watch', 'Accessories'],
+      },
+      {
+        title: 'Quick Links',
+        items: ['Find a Store', 'Order Status', 'Alpha Trade In', 'Financing', 'University Student Offer'],
+      },
+      {
+        title: 'Shop Special Stores',
+        items: ['Education', 'Business'],
+      },
     ],
   },
   {
     name: 'Alpha',
-    subcategories: [
-      { title: 'Explore', items: ['What is Alpha?', 'How it Works', 'Pricing'] },
-      { title: 'Features', items: ['Analytics', 'Campaign Management', 'Collaboration Tools'] },
-      { title: 'Resources', items: ['Case Studies', 'Blog', 'Support'] },
+    columns: [
+      {
+        title: 'Services',
+        items: ['Influencer Marketing', 'Social Media Management', 'Content Creation', 'Brand Partnerships'],
+      },
+      {
+        title: 'Resources',
+        items: ['Case Studies', 'Blog', 'Webinars', 'Industry Reports'],
+      },
+      {
+        title: 'Support',
+        items: ['Contact Us', 'FAQs', 'Pricing', 'Book a Demo'],
+      },
     ],
   },
-  {
-    name: 'Brands',
-    subcategories: [
-      { title: 'Discover', items: ['Top Brands', 'Emerging Brands', 'Brand Categories'] },
-      { title: 'Services', items: ['Brand Partnerships', 'Influencer Matching', 'Campaign Creation'] },
-      { title: 'Resources', items: ['Brand Guidelines', 'Success Stories', 'Brand Protection'] },
-    ],
-  },
+  // Add other categories here with similar structure
 ];
 
 function Header(): JSX.Element {
@@ -51,18 +62,18 @@ function Header(): JSX.Element {
           <nav className="hidden md:flex space-x-4">
             {categories.map((category) => (
               <DropdownMenu.Root key={category.name}>
-                <DropdownMenu.Trigger className="flex items-center text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">
+                <DropdownMenu.Trigger className="flex items-center text-white hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium focus:bg-gray-700 focus:outline-none">
                   {category.name} <ChevronDownIcon className="ml-1" />
                 </DropdownMenu.Trigger>
                 <DropdownMenu.Portal>
-                  <DropdownMenu.Content className="bg-white shadow-lg rounded-md p-4 w-56 mt-2">
-                    {category.subcategories.map((subcategory) => (
-                      <div key={subcategory.title} className="mb-4">
-                        <h3 className="font-semibold text-gray-900 mb-2">{subcategory.title}</h3>
+                  <DropdownMenu.Content className="bg-gray-800 text-white shadow-lg rounded-md p-4 w-[800px] mt-2 grid grid-cols-3 gap-8">
+                    {category.columns.map((column, index) => (
+                      <div key={index}>
+                        <h3 className="font-semibold text-gray-300 mb-2">{column.title}</h3>
                         <ul className="space-y-2">
-                          {subcategory.items.map((item) => (
+                          {column.items.map((item) => (
                             <li key={item}>
-                              <Link href={`/${category.name.toLowerCase()}/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-sm text-gray-700 hover:text-blue-600 transition-colors">
+                              <Link href={`/${category.name.toLowerCase()}/${item.toLowerCase().replace(/\s+/g, '-')}`} className="text-sm text-gray-300 hover:text-white transition-colors">
                                 {item}
                               </Link>
                             </li>
