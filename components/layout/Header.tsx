@@ -2,11 +2,11 @@
 
 // components/Header.tsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import * as HoverCard from '@radix-ui/react-hover-card';
-import { ChevronDownIcon, HamburgerMenuIcon } from '@radix-ui/react-icons';
+import * as Popover from '@radix-ui/react-popover';
+import { HamburgerMenuIcon } from '@radix-ui/react-icons';
 import dynamic from 'next/dynamic';
 
 const DropdownContent = dynamic(() => import('./DropdownContent'), { ssr: false });
@@ -50,6 +50,9 @@ const categories = [
 ];
 
 function Header(): JSX.Element {
+  const [isOpen, setIsOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState(categories[0].name);
+
   return (
     <header className="fixed top-0 left-0 right-0 bg-black shadow z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -62,25 +65,36 @@ function Header(): JSX.Element {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-6">
-            {categories.map((category) => (
-              <HoverCard.Root key={category.name} openDelay={100} closeDelay={300}>
-                <HoverCard.Trigger asChild>
-                  <button className="flex items-center text-white hover:text-gray-300 px-3 py-2 text-base font-medium focus:outline-none relative group">
+          <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
+            <nav className="hidden md:flex space-x-6">
+              {categories.map((category) => (
+                <Popover.Trigger
+                  key={category.name}
+                  asChild
+                  onMouseEnter={() => {
+                    setActiveCategory(category.name);
+                    setIsOpen(true);
+                  }}
+                >
+                  <button className={`text-white hover:text-gray-300 px-3 py-2 text-base font-medium focus:outline-none relative group ${activeCategory === category.name ? 'text-gray-300' : ''}`}>
                     {category.name}
-                    <ChevronDownIcon className="ml-1" />
-                    <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out"></span>
+                    <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-white transform transition-transform duration-200 ease-out ${activeCategory === category.name ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
                   </button>
-                </HoverCard.Trigger>
-                <HoverCard.Portal>
-                  <HoverCard.Content className="bg-black text-white shadow-lg rounded-md p-6 w-[800px] mt-2" sideOffset={5}>
-                    <DropdownContent category={category} />
-                    <HoverCard.Arrow className="fill-black" />
-                  </HoverCard.Content>
-                </HoverCard.Portal>
-              </HoverCard.Root>
-            ))}
-          </nav>
+                </Popover.Trigger>
+              ))}
+            </nav>
+
+            <Popover.Portal>
+              <Popover.Content
+                className="bg-black text-white shadow-lg rounded-md p-6 w-full max-w-7xl mt-2"
+                sideOffset={5}
+                onMouseLeave={() => setIsOpen(false)}
+              >
+                <DropdownContent categories={categories} activeCategory={activeCategory} />
+                <Popover.Arrow className="fill-black" />
+              </Popover.Content>
+            </Popover.Portal>
+          </Popover.Root>
 
           {/* Mobile Navigation */}
           <div className="md:hidden">

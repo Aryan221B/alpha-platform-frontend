@@ -2,16 +2,21 @@ import React from 'react';
 import Link from 'next/link';
 
 interface DropdownContentProps {
-  category: {
+  categories: {
     name: string;
     columns: {
       title: string;
       items: string[];
     }[];
-  };
+  }[];
+  activeCategory: string;
 }
 
-const DropdownContent: React.FC<DropdownContentProps> = ({ category }) => {
+const DropdownContent: React.FC<DropdownContentProps> = ({ categories, activeCategory }) => {
+  const category = categories.find(cat => cat.name === activeCategory);
+
+  if (!category) return null;
+
   return (
     <div className="flex justify-between">
       {category.columns.map((column, index) => (
@@ -34,4 +39,3 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ category }) => {
 };
 
 export default DropdownContent;
-
