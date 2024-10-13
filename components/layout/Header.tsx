@@ -86,15 +86,24 @@ function Header(): JSX.Element {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleMouseEnter = (category: string) => {
     setActiveCategory(category);
     setIsOpen(true);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
   };
 
   const handleMouseLeave = () => {
-    setIsOpen(false);
-    setActiveCategory('');
+    timeoutRef.current = setTimeout(() => {
+      if (dropdownRef.current && !dropdownRef.current.contains(document.activeElement)) {
+        setIsOpen(false);
+        setActiveCategory('');
+      }
+    }, 200);
   };
 
   useEffect(() => {
@@ -108,7 +117,7 @@ function Header(): JSX.Element {
   }, []);
 
   return (
-    <header ref={headerRef} className="fixed top-0 left-0 right-0 bg-black shadow z-50">
+    <header className="fixed top-0 left-0 right-0 bg-black shadow z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -208,7 +217,16 @@ function Header(): JSX.Element {
 
       {/* Dropdown Panel */}
       {isOpen && (
-        <div className="absolute left-0 right-0 bg-black shadow-lg animate-fadeIn">
+        <div 
+          ref={dropdownRef}
+          className="absolute left-0 right-0 bg-black shadow-lg animate-fadeIn"
+          onMouseEnter={() => {
+            if (timeoutRef.current) {
+              clearTimeout(timeoutRef.current);
+            }
+          }}
+          onMouseLeave={handleMouseLeave}
+        >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <DropdownContent categories={categories.filter(cat => cat.name === activeCategory)} activeCategory={activeCategory} />
           </div>
