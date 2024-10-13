@@ -1,5 +1,4 @@
 import React from 'react';
-import Layout from '../components/layout/Layout';
 import { Providers } from './providers';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
@@ -17,11 +16,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className="w-full h-full">
+      <body className="flex flex-col min-h-screen">
         <Providers>
           <Header />
-          <main>{children}</main>
+          <main className="flex-grow">
+            {children}
+          </main>
           <Footer />
         </Providers>
       </body>

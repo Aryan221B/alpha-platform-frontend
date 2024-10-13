@@ -33,91 +33,58 @@ body {
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-  :root {
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-   
-    --radius: 0.5rem;
-  }
-    --background: 240 10% 3.9%;
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+  html, body {
+    @apply p-0 m-0 w-full h-full overflow-x-hidden;
   }
 }
-  * {
-@layer base {
-  * {
-    @apply border-border;
-  }
+
+body {
+  @apply bg-background text-foreground;
+}
+
+/* Remove default focus styles */
+*:focus {
+  outline: none;
+}
+
+/* Custom focus styles */
+*:focus-visible {
+  @apply ring-2 ring-blue-500;
+}
+
+@media (min-width: 640px) {
   body {
-    @apply bg-background text-foreground;
-    padding-top: 64px; /* Adjust this value based on your header height */
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    padding-top: 60px;
   }
 }
-  }
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
- 
-    border-color: theme('colors.border');
+
+@media (min-width: 768px) {
+  body {
+    padding-top: 64px;
   }
 }
-    @apply mb-2;
-/* Radix UI specific styles */
-@layer components {
-  .radix-side-top:where([data-side="top"]) {
-    @apply mb-2;
-  }
-  .radix-side-bottom:where([data-side="bottom"]) {
-    @apply mt-2;
-  }
-  .radix-side-left:where([data-side="left"]) {
-    @apply mr-2;
-  }
-  .radix-side-right:where([data-side="right"]) {
-    @apply ml-2;
-  }
+
+.text-base {
+  font-size: 16px;
 }
-    animation: enter 150ms ease-out;
+
+.text-lg {
+  font-size: 18px;
+}
+
+.bg-black {
+  background-color: #000000;
+}
+
+.text-white {
+  color: #FFFFFF;
+}
+
+.text-gray-300 {
+  color: #D1D5DB;
+}
+
 /* Animation utilities */
 @layer utilities {
   .animate-in {
@@ -147,7 +114,7 @@ body {
     }
   }
 }
-    background-color: theme('colors.background');
+
 /* If you need to use bg-background as a custom utility */
 @layer utilities {
   .bg-background {
@@ -155,93 +122,5 @@ body {
   }
   .text-foreground {
     color: theme('colors.foreground');
-  }
-}
-
-@media (min-width: 640px) {
-  body {
-    padding-top: 60px;
-  }
-}
-
-@media (min-width: 768px) {
-  body {
-
-/* Remove default focus styles */
-*:focus {
-  outline: none;
-}
-
-
-/* Add custom focus styles */
-*:focus-visible {
-  outline: 2px solid white;
-  outline-offset: 2px;
-}
-
-/* Remove all outlines */
-* {
-  outline: none !important;
-}
-
-/* Remove focus outlines for all elements */
-*:focus,
-*:focus-visible {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-/* Utility class to remove borders */
-.no-border {
-  border: none !important;
-}
-
-/* Apple-inspired styles */
-.apple-nav {
-  background-color: #000000;
-  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
-}
-
-.apple-nav-link {
-  color: #FFFFFF;
-  font-size: 14px;
-  transition: color 0.2s ease;
-  position: relative;
-}
-
-.apple-nav-link::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  bottom: -2px;
-  left: 0;
-  background-color: #FFFFFF;
-  transform: scaleX(0);
-  transition: transform 0.2s ease;
-}
-
-.apple-nav-link:hover {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.apple-nav-link:hover::after {
-  transform: scaleX(1);
-}
-
-.apple-nav-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #FFFFFF;
-}
-
-.apple-nav-dropdown {
-  background-color: #000000;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-@media (max-width: 768px) {
-  .apple-nav-dropdown {
-    border-top: none;
   }
 }

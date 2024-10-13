@@ -47,9 +47,7 @@ const categories = [
       },
     ],
   },
-  // Add other categories here with similar structure
 ];
-
 
 const quickLinks = {
   name: 'Quick Links',
@@ -142,12 +140,29 @@ function Header(): JSX.Element {
                 </button>
               </div>
             ))}
-            {/* About Us Link */}
+            <Link 
+              href="/work" 
+              className="text-white text-[16px] hover:text-gray-300 focus:outline-none transition-colors duration-200"
+            >
+              Work
+            </Link>
             <Link 
               href="/about-us" 
               className="text-white text-[16px] hover:text-gray-300 focus:outline-none transition-colors duration-200"
             >
               About Us
+            </Link>
+            <Link 
+              href="/contact" 
+              className="text-white text-[16px] hover:text-gray-300 focus:outline-none transition-colors duration-200"
+            >
+              Contact
+            </Link>
+            <Link 
+              href="/careers" 
+              className="text-white text-[16px] hover:text-gray-300 focus:outline-none transition-colors duration-200"
+            >
+              Careers
             </Link>
           </nav>
 
@@ -247,41 +262,30 @@ function Header(): JSX.Element {
               </Accordion.Content>
             </Accordion.Item>
           ))}
-          {/* About Us Link in Mobile Menu */}
+          <Link 
+            href="/work" 
+            className="block px-4 py-2 text-white text-[16px] hover:text-gray-300 transition-colors duration-200"
+          >
+            Work
+          </Link>
           <Link 
             href="/about-us" 
             className="block px-4 py-2 text-white text-[16px] hover:text-gray-300 transition-colors duration-200"
           >
             About Us
           </Link>
-          <Accordion.Item value="search">
-            <Accordion.Trigger className="flex justify-between items-center w-full px-4 py-2 text-white text-[16px] hover:text-gray-300 transition-colors duration-200">
-              Search
-              <ChevronDownIcon className="h-5 w-5" />
-            </Accordion.Trigger>
-            <Accordion.Content className="px-4 py-2">
-              <div className="flex items-center mb-4">
-                <input
-                  type="text"
-                  placeholder="Search Alpha.com"
-                  className="w-full bg-gray-800 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
-                />
-                <button className="ml-2 bg-white text-black px-4 py-2 rounded-md hover:bg-gray-200 transition-colors duration-200">
-                  Search
-                </button>
-              </div>
-              <DropdownContent categories={[quickLinks]} activeCategory={quickLinks.name} />
-            </Accordion.Content>
-          </Accordion.Item>
-          <Accordion.Item value="profile">
-            <Accordion.Trigger className="flex justify-between items-center w-full px-4 py-2 text-white text-[16px] hover:text-gray-300 transition-colors duration-200">
-              Profile
-              <ChevronDownIcon className="h-5 w-5" />
-            </Accordion.Trigger>
-            <Accordion.Content className="px-4 py-2">
-              <DropdownContent categories={[profileLinks]} activeCategory={profileLinks.name} />
-            </Accordion.Content>
-          </Accordion.Item>
+          <Link 
+            href="/contact" 
+            className="block px-4 py-2 text-white text-[16px] hover:text-gray-300 transition-colors duration-200"
+          >
+            Contact
+          </Link>
+          <Link 
+            href="/careers" 
+            className="block px-4 py-2 text-white text-[16px] hover:text-gray-300 transition-colors duration-200"
+          >
+            Careers
+          </Link>
         </Accordion.Root>
       </div>
     </header>
@@ -289,3 +293,4 @@ function Header(): JSX.Element {
 }
 
 export default Header;
+

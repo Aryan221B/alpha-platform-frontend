@@ -7,17 +7,8 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
-        border: '#e5e7eb',
-        background: '#ffffff',
-        foreground: '#000000',
-        // Add any other custom colors here
-      },
-      spacing: {
-        '3.5': '0.875rem', // This is between 3 (0.75rem) and 4 (1rem)
-      },
+      // Your custom extensions
     },
   },
   plugins: [],
-  darkMode: 'class',
 };

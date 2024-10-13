@@ -5,19 +5,26 @@ import * as Separator from '@radix-ui/react-separator';
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <main className="relative">
+    <div className="w-screen h-screen overflow-hidden">
+      <main className="relative w-full h-full">
         {/* Hero Section */}
-        <section className="relative h-screen flex items-center justify-center">
-          <video autoPlay loop muted className="absolute inset-0 w-full h-full object-cover">
+        <section className="absolute inset-0">
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            className="absolute inset-0 w-full h-full object-cover"
+          >
             <source src="/videos/hero-video.mp4" type="video/mp4" />
           </video>
-          <div className="relative z-10 text-center text-white">
-            <h1 className="text-5xl font-bold mb-4">Welcome to ALPHA Platform</h1>
-            <p className="text-xl mb-8">Connecting Influencers and Brands</p>
-            <Link href="/signup" className="bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition duration-300">
-              Get Started
-            </Link>
+          <div className="relative z-10 h-full flex items-center justify-center">
+            <div className="text-center text-white">
+              <h1 className="text-5xl font-bold mb-4">Welcome to ALPHA Platform</h1>
+              <p className="text-xl mb-8">Connecting Influencers and Brands</p>
+              <Link href="/signup" className="bg-blue-600 text-white px-8 py-3 rounded-full text-lg font-semibold hover:bg-blue-700 transition duration-300">
+                Get Started
+              </Link>
+            </div>
           </div>
         </section>
 
