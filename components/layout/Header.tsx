@@ -2,12 +2,12 @@
 
 // components/Header.tsx
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import * as Popover from '@radix-ui/react-popover';
 import * as Accordion from '@radix-ui/react-accordion';
-import { HamburgerMenuIcon, ChevronDownIcon } from '@radix-ui/react-icons';
+import { HamburgerMenuIcon, ChevronDownIcon, MagnifyingGlassIcon, PersonIcon } from '@radix-ui/react-icons';
 import dynamic from 'next/dynamic';
 
 const DropdownContent = dynamic(() => import('./DropdownContent'), { ssr: false });
@@ -50,19 +50,71 @@ const categories = [
   // Add other categories here with similar structure
 ];
 
+
+const quickLinks = {
+  name: 'Quick Links',
+  columns: [
+    {
+      title: 'Popular Searches',
+      items: ['New Arrivals', 'Best Sellers', 'Sale Items', 'Gift Cards'],
+    },
+    {
+      title: 'Categories',
+      items: ['Women', 'Men', 'Kids', 'Accessories'],
+    },
+    {
+      title: 'Help',
+      items: ['FAQs', 'Contact Us', 'Shipping', 'Returns'],
+    },
+  ],
+};
+
+const profileLinks = {
+  name: 'Profile',
+  columns: [
+    {
+      title: 'Account',
+      items: ['My Profile', 'Orders', 'Wishlist', 'Settings'],
+    },
+    {
+      title: 'Services',
+      items: ['Alpha+', 'Gift Cards', 'Student Discount'],
+    },
+  ],
+};
+
 function Header(): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState(categories[0].name);
+  const [activeCategory, setActiveCategory] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const headerRef = useRef<HTMLDivElement>(null);
 
-  const preventFocus = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const handleMouseEnter = (category: string) => {
+    setActiveCategory(category);
+    setIsOpen(true);
   };
 
+  const handleMouseLeave = () => {
+    setIsOpen(false);
+    setActiveCategory('');
+  };
+
+  useEffect(() => {
+    const header = headerRef.current;
+    if (header) {
+      header.addEventListener('mouseleave', handleMouseLeave);
+      return () => {
+        header.removeEventListener('mouseleave', handleMouseLeave);
+      };
+    }
+  }, []);
+
   return (
-    <header className="fixed top-0 left-0 right-0 bg-black shadow z-50">
+    <header ref={headerRef} className="fixed top-0 left-0 right-0 bg-black shadow z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-[60px] md:h-[64px]">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link href="/">
@@ -71,39 +123,76 @@ function Header(): JSX.Element {
           </div>
 
           {/* Desktop Navigation */}
-          <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
-            <nav className="hidden md:flex space-x-6">
-              {categories.map((category) => (
-                <Popover.Trigger
-                  key={category.name}
-                  asChild
-                  onMouseEnter={() => {
-                    setActiveCategory(category.name);
-                    setIsOpen(true);
-                  }}
-                  onMouseDown={preventFocus}
-                >
-                  <button className={`text-white hover:text-gray-300 px-3 py-2 text-base font-medium focus:outline-none relative group no-border ${activeCategory === category.name ? 'text-gray-300' : ''}`}>
-                    {category.name}
-                    <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-white transform transition-transform duration-200 ease-out ${activeCategory === category.name ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'}`}></span>
-                  </button>
-                </Popover.Trigger>
-              ))}
-            </nav>
-
-            <Popover.Portal>
-              <Popover.Content
-                className="bg-black text-white shadow-lg w-screen left-0 right-0 mt-0 animate-fadeIn no-border"
-                sideOffset={0}
-                onMouseLeave={() => setIsOpen(false)}
-                onMouseDown={preventFocus}
+          <nav className="hidden md:flex space-x-6 items-center">
+            {categories.map((category) => (
+              <div
+                key={category.name}
+                onMouseEnter={() => handleMouseEnter(category.name)}
+                className="relative"
               >
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 no-border">
-                  <DropdownContent categories={categories} activeCategory={activeCategory} />
-                </div>
-              </Popover.Content>
-            </Popover.Portal>
-          </Popover.Root>
+                <button 
+                  className="text-white text-[16px] hover:text-gray-300 focus:outline-none transition-colors duration-200"
+                >
+                  {category.name}
+                </button>
+              </div>
+            ))}
+          </nav>
+
+          {/* Right-side icons */}
+          <div className="hidden md:flex items-center space-x-4">
+            <Popover.Root open={isSearchOpen} onOpenChange={setIsSearchOpen}>
+              <Popover.Trigger asChild>
+                <button 
+                  className="text-white hover:text-gray-300 focus:outline-none transition-colors duration-200"
+                  onClick={() => setIsSearchOpen(true)}
+                >
+                  <MagnifyingGlassIcon className="h-5 w-5" />
+                </button>
+              </Popover.Trigger>
+              <Popover.Portal>
+                <Popover.Content
+                  className="bg-black text-white shadow-lg w-screen left-0 right-0 mt-0 animate-fadeIn"
+                  sideOffset={0}
+                >
+                  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                    <div className="flex items-center mb-4">
+                      <input
+                        type="text"
+                        placeholder="Search Alpha.com"
+                        className="w-full bg-gray-800 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+                      />
+                      <button className="ml-2 bg-white text-black px-4 py-2 rounded-md hover:bg-gray-200 transition-colors duration-200">
+                        Search
+                      </button>
+                    </div>
+                    <DropdownContent categories={[quickLinks]} activeCategory={quickLinks.name} />
+                  </div>
+                </Popover.Content>
+              </Popover.Portal>
+            </Popover.Root>
+            <Popover.Root open={isProfileOpen} onOpenChange={setIsProfileOpen}>
+              <Popover.Trigger asChild>
+                <button 
+                  className="text-white hover:text-gray-300 focus:outline-none transition-colors duration-200"
+                  onClick={() => setIsProfileOpen(true)}
+                >
+                  <PersonIcon className="h-5 w-5" />
+                </button>
+              </Popover.Trigger>
+              <Popover.Portal>
+                <Popover.Content
+                  className="bg-black text-white shadow-lg w-64 mt-2 rounded-md animate-fadeIn"
+                  sideOffset={5}
+                  align="end"
+                >
+                  <div className="p-4">
+                    <DropdownContent categories={[profileLinks]} activeCategory={profileLinks.name} />
+                  </div>
+                </Popover.Content>
+              </Popover.Portal>
+            </Popover.Root>
+          </div>
 
           {/* Mobile Navigation */}
           <div className="md:hidden">
@@ -111,24 +200,24 @@ function Header(): JSX.Element {
               <HamburgerMenuIcon className="h-6 w-6" />
             </button>
           </div>
-
-          {/* Authentication Links */}
-          <div className="hidden md:flex items-center space-x-4">
-            <Link href="/login" className="text-white hover:text-gray-300 px-3 py-2 text-base font-medium relative group">
-              Login
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out"></span>
-            </Link>
-            <Link href="/signup" className="bg-white text-black px-4 py-2 rounded-md text-base font-medium hover:bg-gray-200 transition-colors">Sign Up</Link>
-          </div>
         </div>
       </div>
+
+      {/* Dropdown Panel */}
+      {isOpen && (
+        <div className="absolute left-0 right-0 bg-black shadow-lg animate-fadeIn">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <DropdownContent categories={categories.filter(cat => cat.name === activeCategory)} activeCategory={activeCategory} />
+          </div>
+        </div>
+      )}
 
       {/* Mobile Menu */}
       <div className={`md:hidden bg-black ${mobileMenuOpen ? 'block' : 'hidden'}`}>
         <Accordion.Root type="single" collapsible>
           {categories.map((category) => (
             <Accordion.Item value={category.name} key={category.name}>
-              <Accordion.Trigger className="flex justify-between items-center w-full px-4 py-2 text-white hover:bg-gray-800">
+              <Accordion.Trigger className="flex justify-between items-center w-full px-4 py-2 text-white text-[16px] hover:text-gray-300 transition-colors duration-200">
                 {category.name}
                 <ChevronDownIcon className="h-5 w-5" />
               </Accordion.Trigger>
@@ -137,6 +226,34 @@ function Header(): JSX.Element {
               </Accordion.Content>
             </Accordion.Item>
           ))}
+          <Accordion.Item value="search">
+            <Accordion.Trigger className="flex justify-between items-center w-full px-4 py-2 text-white text-[16px] hover:text-gray-300 transition-colors duration-200">
+              Search
+              <ChevronDownIcon className="h-5 w-5" />
+            </Accordion.Trigger>
+            <Accordion.Content className="px-4 py-2">
+              <div className="flex items-center mb-4">
+                <input
+                  type="text"
+                  placeholder="Search Alpha.com"
+                  className="w-full bg-gray-800 text-white px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+                />
+                <button className="ml-2 bg-white text-black px-4 py-2 rounded-md hover:bg-gray-200 transition-colors duration-200">
+                  Search
+                </button>
+              </div>
+              <DropdownContent categories={[quickLinks]} activeCategory={quickLinks.name} />
+            </Accordion.Content>
+          </Accordion.Item>
+          <Accordion.Item value="profile">
+            <Accordion.Trigger className="flex justify-between items-center w-full px-4 py-2 text-white text-[16px] hover:text-gray-300 transition-colors duration-200">
+              Profile
+              <ChevronDownIcon className="h-5 w-5" />
+            </Accordion.Trigger>
+            <Accordion.Content className="px-4 py-2">
+              <DropdownContent categories={[profileLinks]} activeCategory={profileLinks.name} />
+            </Accordion.Content>
+          </Accordion.Item>
         </Accordion.Root>
       </div>
     </header>
