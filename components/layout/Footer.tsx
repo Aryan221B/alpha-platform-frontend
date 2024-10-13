@@ -5,74 +5,67 @@ import Link from 'next/link';
 //import Image from 'next/image';
 import * as Separator from '@radix-ui/react-separator';
 import {TwitterLogoIcon, LinkedInLogoIcon, InstagramLogoIcon} from '@radix-ui/react-icons';
+import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin, FaYoutube } from 'react-icons/fa';
 
-interface FooterProps {
-  logo?: string;
-}
-
-const Footer: React.FC<FooterProps> = ({ logo }) => {
+const Footer: React.FC = () => {
   return (
-    <footer className="bg-black text-white py-12">
-      <div className="container mx-auto px-6">
+    <footer className="bg-black text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand Logo & Tagline */}
-          {logo && <img src={logo} alt="Logo" className="mb-4" />}
-          <p className="text-lg mb-4">Let&apos;s Talk</p>
-          <Link href="/contact" className="bg-white text-black px-4 py-2 rounded hover:bg-gray-200 transition-colors">
-            Contact Us
-          </Link>
-
-          {/* Navigation Links */}
+          {/* Company Info */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">Navigation</h3>
+            <h3 className="text-lg font-semibold mb-4">Alpha</h3>
+            <p className="text-sm">Innovative solutions for a better future.</p>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
-              {['Home', 'Work', 'About Us', 'News', 'Careers', 'Contact'].map((item) => (
-                <li key={item}>
-                  <Link href={`/${item.toLowerCase().replace(' ', '-')}`} className="hover:text-gray-300 transition-colors">
-                    {item}
-                  </Link>
-                </li>
-              ))}
+              <li><Link href="/" className="text-sm hover:text-gray-300 transition-colors duration-200">Home</Link></li>
+              <li><Link href="/work" className="text-sm hover:text-gray-300 transition-colors duration-200">Work</Link></li>
+              <li><Link href="/about-us" className="text-sm hover:text-gray-300 transition-colors duration-200">About Us</Link></li>
+              <li><Link href="/news" className="text-sm hover:text-gray-300 transition-colors duration-200">News</Link></li>
+              <li><Link href="/careers" className="text-sm hover:text-gray-300 transition-colors duration-200">Careers</Link></li>
+              <li><Link href="/contact" className="text-sm hover:text-gray-300 transition-colors duration-200">Contact</Link></li>
             </ul>
           </div>
 
-          {/* Location Addresses */}
+          {/* Contact Info */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">Our Offices</h3>
-            <ul className="space-y-4">
-              {['New York', 'Dallas', 'Los Angeles'].map((city) => (
-                <li key={city}>
-                  <h4 className="font-semibold">{city}</h4>
-                  <p>123 Main St, Suite 100</p>
-                  <p>{city}, State 12345</p>
-                </li>
-              ))}
-            </ul>
+            <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
+            <p className="text-sm">123 Tech Street</p>
+            <p className="text-sm">San Francisco, CA 94105</p>
+            <p className="text-sm">Phone: (123) 456-7890</p>
+            <p className="text-sm">Email: info@alpha.com</p>
           </div>
-
-          {/* Social Icons */}
+          
+          {/* Social Media Links */}
           <div>
-            <h3 className="text-xl font-semibold mb-4">Follow Us</h3>
+            <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
             <div className="flex space-x-4">
-              {/* <a href="#" className="hover:text-gray-300 transition-colors"><FacebookLogoIcon className="w-6 h-6" /></a> */}
-              <a href="#" className="hover:text-gray-300 transition-colors"><TwitterLogoIcon className="w-6 h-6" /></a>
-              <a href="#" className="hover:text-gray-300 transition-colors"><LinkedInLogoIcon className="w-6 h-6" /></a>
-              <a href="#" className="hover:text-gray-300 transition-colors"><InstagramLogoIcon className="w-6 h-6" /></a>
+              <Link href="https://facebook.com/alpha" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors duration-200">
+                <FaFacebook size={24} />
+              </Link>
+              <Link href="https://twitter.com/alpha" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors duration-200">
+                <FaTwitter size={24} />
+              </Link>
+              <Link href="https://instagram.com/alpha" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors duration-200">
+                <FaInstagram size={24} />
+              </Link>
+              <Link href="https://linkedin.com/company/alpha" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors duration-200">
+                <FaLinkedin size={24} />
+              </Link>
+              <Link href="https://youtube.com/alpha" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors duration-200">
+                <FaYoutube size={24} />
+              </Link>
             </div>
           </div>
         </div>
-
-        <Separator.Root className="bg-gray-600 h-px my-8" />
-
-        {/* Legal Links */}
-        <div className="container mx-auto px-6">
-          <div className="flex justify-between items-center">
-            <p>&copy; 2023 Your Company Name. All rights reserved.</p>
-            <div className="space-x-4">
-              <Link href="/privacy-policy" className="hover:text-gray-300 transition-colors">Privacy Policy</Link>
-              <Link href="/terms-of-service" className="hover:text-gray-300 transition-colors">Terms of Service</Link>
-            </div>
-          </div>
+        
+        {/* Copyright notice */}
+        <div className="mt-8 border-t border-gray-700 pt-8 text-center">
+          <p className="text-sm">&copy; {new Date().getFullYear()} Alpha. All rights reserved.</p>
         </div>
       </div>
     </footer>
