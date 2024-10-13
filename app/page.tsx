@@ -6,7 +6,7 @@ import * as Separator from '@radix-ui/react-separator';
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <main className="pt-20">
+      <main className="relative">
         {/* Hero Section */}
         <section className="relative h-screen flex items-center justify-center">
           <video autoPlay loop muted className="absolute inset-0 w-full h-full object-cover">
