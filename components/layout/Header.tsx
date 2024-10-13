@@ -86,12 +86,13 @@ function Header(): JSX.Element {
 
             <Popover.Portal>
               <Popover.Content
-                className="bg-black text-white shadow-lg rounded-md p-6 w-full max-w-7xl mt-2"
-                sideOffset={5}
+                className="bg-black text-white shadow-lg w-screen left-0 right-0 mt-0"
+                sideOffset={0}
                 onMouseLeave={() => setIsOpen(false)}
               >
-                <DropdownContent categories={categories} activeCategory={activeCategory} />
-                <Popover.Arrow className="fill-black" />
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                  <DropdownContent categories={categories} activeCategory={activeCategory} />
+                </div>
               </Popover.Content>
             </Popover.Portal>
           </Popover.Root>

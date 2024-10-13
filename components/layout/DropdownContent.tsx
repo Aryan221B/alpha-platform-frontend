@@ -18,9 +18,9 @@ const DropdownContent: React.FC<DropdownContentProps> = ({ categories, activeCat
   if (!category) return null;
 
   return (
-    <div className="flex justify-between">
+    <div className="grid grid-cols-3 gap-8">
       {category.columns.map((column, index) => (
-        <div key={index} className="flex-1">
+        <div key={index}>
           <h3 className="font-semibold text-white text-lg mb-3">{column.title}</h3>
           <ul className="space-y-2">
             {column.items.map((item) => (
