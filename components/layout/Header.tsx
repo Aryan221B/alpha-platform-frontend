@@ -59,10 +59,6 @@ const quickLinks = {
       items: ['New Arrivals', 'Best Sellers', 'Sale Items', 'Gift Cards'],
     },
     {
-      title: 'Categories',
-      items: ['Women', 'Men', 'Kids', 'Accessories'],
-    },
-    {
       title: 'Help',
       items: ['FAQs', 'Contact Us', 'Shipping', 'Returns'],
     },
@@ -77,8 +73,8 @@ const profileLinks = {
       items: ['My Profile', 'Orders', 'Wishlist', 'Settings'],
     },
     {
-      title: 'Services',
-      items: ['Alpha+', 'Gift Cards', 'Student Discount'],
+      title: 'Projects',
+      items: ['Alpha+', 'Discount'],
     },
   ],
 };
@@ -123,7 +119,7 @@ function Header(): JSX.Element {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-6 items-center">
+          <nav className="hidden md:flex space-x-3 items-center">
             {categories.map((category) => (
               <div
                 key={category.name}
@@ -137,6 +133,13 @@ function Header(): JSX.Element {
                 </button>
               </div>
             ))}
+            {/* About Us Link */}
+            <Link 
+              href="/about-us" 
+              className="text-white text-[16px] hover:text-gray-300 focus:outline-none transition-colors duration-200"
+            >
+              About Us
+            </Link>
           </nav>
 
           {/* Right-side icons */}
@@ -226,6 +229,13 @@ function Header(): JSX.Element {
               </Accordion.Content>
             </Accordion.Item>
           ))}
+          {/* About Us Link in Mobile Menu */}
+          <Link 
+            href="/about-us" 
+            className="block px-4 py-2 text-white text-[16px] hover:text-gray-300 transition-colors duration-200"
+          >
+            About Us
+          </Link>
           <Accordion.Item value="search">
             <Accordion.Trigger className="flex justify-between items-center w-full px-4 py-2 text-white text-[16px] hover:text-gray-300 transition-colors duration-200">
               Search
