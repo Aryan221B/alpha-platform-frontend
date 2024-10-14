@@ -4,6 +4,8 @@ import * as AspectRatio from '@radix-ui/react-aspect-ratio';
 import Link from 'next/link';
 import { HamburgerMenuIcon, Cross1Icon } from '@radix-ui/react-icons';
 import * as Separator from '@radix-ui/react-separator';
+import * as Label from '@radix-ui/react-label';
+
 
 const WorkPage: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -40,7 +42,13 @@ const WorkPage: React.FC = () => {
             />
           </AspectRatio.Root>
           <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-50" />
-          
+
+          {/* Text Overlay */}
+          <div className="absolute bottom-4 left-4 z-50 text-white">
+            <Label.Root className="text-sm block">Global Olympics</Label.Root>
+            <Label.Root className="text-2xl font-serif block">Upstream x Olympics</Label.Root>
+          </div>
+
           {/* Logo */}
           <Link href="/" className="absolute top-4 left-4 z-50">
             <Image src="/images/og1.webp" alt="Logo" width={80} height={32} />
