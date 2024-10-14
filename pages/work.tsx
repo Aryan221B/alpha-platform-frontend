@@ -3,7 +3,7 @@ import Image from 'next/image';
 import * as AspectRatio from '@radix-ui/react-aspect-ratio';
 import Link from 'next/link';
 import { HamburgerMenuIcon, Cross1Icon } from '@radix-ui/react-icons';
-import Footer from '../components/layout/Footer'; // Import the Footer component
+import * as Separator from '@radix-ui/react-separator';
 
 const WorkPage: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,16 +26,16 @@ const WorkPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <main className="flex-grow">
-        {/* Hero Section */}
-        <div className="relative h-screen w-full overflow-hidden">
+    <>
+      {/* Hero Section */}
+      <section className="flex items-center justify-center h-screen relative -mt-16">
+        <div className="relative w-full h-full overflow-hidden">
           <AspectRatio.Root ratio={16 / 9} className="w-full h-full">
             <Image
               src="/images/hero-image.jpg"
               alt="Person holding snacks"
-              layout="fill"
-              objectFit="cover"
+              fill
+              className="object-cover"
               priority
             />
           </AspectRatio.Root>
@@ -72,15 +72,13 @@ const WorkPage: React.FC = () => {
             </button>
           </div>
         </div>
+      </section>
 
-        {/* Additional Sections */}
-        {/* Future sections can be added here */}
+      <Separator.Root className="bg-gray-200 h-px" />
 
-      </main>
-      
-      {/* Footer */}
-      <Footer />
-    </div>
+      {/* Additional Sections */}
+      {/* Future sections can be added here */}
+    </>
   );
 };
 

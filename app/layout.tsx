@@ -1,6 +1,6 @@
 import React from 'react';
 import { Providers } from './providers';
-import HeaderWrapper from '../components/layout/HeaderWrapper'; // Use HeaderWrapper instead of Header directly
+import HeaderWrapper from '../components/layout/HeaderWrapper';
 import Footer from '../components/layout/Footer';
 import "./globals.css";
 
@@ -19,7 +19,7 @@ export default function RootLayout({
       <body className="flex flex-col min-h-screen">
         <Providers>
           <HeaderWrapper />
-          <main className="flex-grow pt-16"> {/* Ensure this padding matches the Header's height */}
+          <main className="flex-grow pt-16">
             {children}
           </main>
           <Footer />
