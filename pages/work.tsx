@@ -1,12 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import * as AspectRatio from '@radix-ui/react-aspect-ratio';
-import Footer from '../components/layout/Footer';
-import { HamburgerMenuIcon, Cross1Icon } from '@radix-ui/react-icons';
 import Link from 'next/link';
+import { HamburgerMenuIcon, Cross1Icon } from '@radix-ui/react-icons';
 
 const WorkPage: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    setIsMenuOpen(true);
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setIsMenuOpen(false);
+      setIsHovered(false);
+    }, 200);
+  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -30,24 +46,27 @@ const WorkPage: React.FC = () => {
           </Link>
 
           {/* Navigation Menu */}
-          <div className="absolute top-4 right-4 flex items-center z-50">
-            <nav className={`mr-4 ${isMenuOpen ? 'flex' : 'hidden'} space-x-6`}>
-              <Link href="/" className="text-white hover:text-gray-300">Home</Link>
-              <Link href="/about-us" className="text-white hover:text-gray-300">About Us</Link>
-              <Link href="/work" className="text-white hover:text-gray-300">Work</Link>
-              <Link href="/contact" className="text-white hover:text-gray-300">Contact</Link>
-              <Link href="/careers" className="text-white hover:text-gray-300">Careers</Link>
+          <div 
+            className="absolute top-4 right-4 flex items-center z-50"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <nav className={`mr-4 transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'} space-x-6`}>
+              <Link href="/" className="text-white hover:text-gray-300 transition-colors duration-200">Home</Link>
+              <Link href="/about-us" className="text-white hover:text-gray-300 transition-colors duration-200">About Us</Link>
+              <Link href="/work" className="text-white hover:text-gray-300 transition-colors duration-200">Work</Link>
+              <Link href="/contact" className="text-white hover:text-gray-300 transition-colors duration-200">Contact</Link>
+              <Link href="/careers" className="text-white hover:text-gray-300 transition-colors duration-200">Careers</Link>
             </nav>
             
             {/* Hamburger Menu Icon */}
             <button 
-              className="text-white"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-white p-2 rounded-full transition-colors duration-200 hover:bg-white hover:bg-opacity-20"
             >
-              {isMenuOpen ? (
-                <Cross1Icon className="h-10 w-10" />
+              {isHovered ? (
+                <Cross1Icon className="h-10 w-10 transition-transform duration-200 transform rotate-0 hover:rotate-90" />
               ) : (
-                <HamburgerMenuIcon className="h-10 w-10" />
+                <HamburgerMenuIcon className="h-10 w-10 transition-transform duration-200" />
               )}
             </button>
           </div>
@@ -64,7 +83,6 @@ const WorkPage: React.FC = () => {
           <p>Here you can showcase your company's projects and achievements.</p>
         </div>
       </main>
-      <Footer />
     </div>
   );
 };
