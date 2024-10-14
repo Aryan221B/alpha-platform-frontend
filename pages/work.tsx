@@ -3,6 +3,7 @@ import Image from 'next/image';
 import * as AspectRatio from '@radix-ui/react-aspect-ratio';
 import Link from 'next/link';
 import { HamburgerMenuIcon, Cross1Icon } from '@radix-ui/react-icons';
+import Footer from '../components/layout/Footer'; // Import the Footer component
 
 const WorkPage: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -70,19 +71,15 @@ const WorkPage: React.FC = () => {
               )}
             </button>
           </div>
-
-          <div className="absolute bottom-16 left-16 text-white">
-            <h2 className="text-2xl font-semibold mb-2">Goldfish</h2>
-            <h1 className="text-5xl font-bold">Goldfish x Boban Hand Dish</h1>
-          </div>
         </div>
 
-        {/* Rest of the content */}
-        <div className="container mx-auto px-4 py-8">
-          <h1 className="text-3xl font-bold mb-4">Our Work</h1>
-          <p>Here you can showcase your company's projects and achievements.</p>
-        </div>
+        {/* Additional Sections */}
+        {/* Future sections can be added here */}
+
       </main>
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

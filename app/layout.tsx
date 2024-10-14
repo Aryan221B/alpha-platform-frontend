@@ -1,9 +1,8 @@
 import React from 'react';
 import { Providers } from './providers';
-import Header from '../components/layout/Header';
+import HeaderWrapper from '../components/layout/HeaderWrapper'; // Use HeaderWrapper instead of Header directly
 import Footer from '../components/layout/Footer';
 import "./globals.css";
-//import 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css';
 
 export const metadata: Metadata = {
   title: "ALPHA - Connecting Influencers and Brands",
@@ -19,8 +18,8 @@ export default function RootLayout({
     <html lang="en" className="w-full h-full">
       <body className="flex flex-col min-h-screen">
         <Providers>
-          <Header />
-          <main className="flex-grow">
+          <HeaderWrapper />
+          <main className="flex-grow pt-16"> {/* Ensure this padding matches the Header's height */}
             {children}
           </main>
           <Footer />

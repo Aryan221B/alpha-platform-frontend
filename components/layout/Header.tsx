@@ -77,7 +77,7 @@ const profileLinks = {
   ],
 };
 
-function Header(): JSX.Element {
+const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -290,7 +290,6 @@ function Header(): JSX.Element {
       </div>
     </header>
   );
-}
+};
 
 export default Header;
-

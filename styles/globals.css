@@ -26,7 +26,8 @@
   }
   
 body {
-  padding-top: 64px; /* Adjust this value based on your header height */
+  @apply bg-background text-foreground;
+  /* Ensure no padding-top is set here */
 }
 
 @tailwind base;
@@ -37,10 +38,6 @@ body {
   html, body {
     @apply p-0 m-0 w-full h-full overflow-x-hidden;
   }
-}
-
-body {
-  @apply bg-background text-foreground;
 }
 
 /* Remove default focus styles */
