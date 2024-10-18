@@ -1,32 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import Image from 'next/image';
-import * as AspectRatio from '@radix-ui/react-aspect-ratio';
 import Link from 'next/link';
-import { HamburgerMenuIcon, Cross1Icon } from '@radix-ui/react-icons';
+import * as AspectRatio from '@radix-ui/react-aspect-ratio';
 import * as Separator from '@radix-ui/react-separator';
 import * as Label from '@radix-ui/react-label';
 
-
 const WorkPage: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const handleMouseEnter = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    setIsMenuOpen(true);
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => {
-      setIsMenuOpen(false);
-      setIsHovered(false);
-    }, 200);
-  };
-
   return (
     <>
       {/* Hero Section */}
@@ -45,47 +24,71 @@ const WorkPage: React.FC = () => {
 
           {/* Text Overlay */}
           <div className="absolute bottom-4 left-4 z-50 text-white">
-            <Label.Root className="text-sm block">Global Olympics</Label.Root>
-            <Label.Root className="text-2xl font-serif block">Upstream x Olympics</Label.Root>
+            <Label.Root className="text-sm block">Toyota Global Olympics</Label.Root>
+            <Label.Root className="text-2xl font-serif block">Upstream</Label.Root>
+            
+            {/* View Work Link */}
+            <Link 
+              href="/work/upstream" 
+              className="mt-2 inline-block text-white bg-black hover:bg-white hover:text-black transition-colors duration-200 px-4 py-2"
+            >
+              View Work
+            </Link>
           </div>
 
-          {/* Logo */}
+          {/* Existing Logo and Navigation Menu */}
           <Link href="/" className="absolute top-4 left-4 z-50">
             <Image src="/images/og1.webp" alt="Logo" width={80} height={32} />
           </Link>
-
-          {/* Navigation Menu */}
-          <div 
-            className="absolute top-4 right-4 flex items-center z-50"
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-          >
-            <nav className={`mr-4 transition-opacity duration-300 ${isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'} space-x-6`}>
-              <Link href="/" className="text-white hover:text-gray-300 transition-colors duration-200">Home</Link>
-              <Link href="/about-us" className="text-white hover:text-gray-300 transition-colors duration-200">About Us</Link>
-              <Link href="/work" className="text-white hover:text-gray-300 transition-colors duration-200">Work</Link>
-              <Link href="/contact" className="text-white hover:text-gray-300 transition-colors duration-200">Contact</Link>
-              <Link href="/careers" className="text-white hover:text-gray-300 transition-colors duration-200">Careers</Link>
-            </nav>
-            
-            {/* Hamburger Menu Icon */}
-            <button 
-              className="text-white p-2 rounded-full transition-colors duration-200 hover:bg-white hover:bg-opacity-20"
-            >
-              {isHovered ? (
-                <Cross1Icon className="h-10 w-10 transition-transform duration-200 transform rotate-0 hover:rotate-90" />
-              ) : (
-                <HamburgerMenuIcon className="h-10 w-10 transition-transform duration-200" />
-              )}
-            </button>
-          </div>
         </div>
       </section>
 
       <Separator.Root className="bg-gray-200 h-px" />
 
-      {/* Additional Sections */}
-      {/* Future sections can be added here */}
+      {/* Goldfish x Boban Hand Dish Section */}
+      <section className="py-20 bg-gray-100">
+        <div className="container mx-auto px-6">
+          <Link href="/work/goldfish-boban" className="block mb-8">
+            <div className="relative">
+              <Image
+                src="/images/goldfish-boban.jpg"
+                alt="Goldfish x Boban Hand Dish"
+                width={1000}
+                height={600}
+                className="w-full h-auto object-cover"
+              />
+              <div className="absolute bottom-4 left-4 text-white">
+                <Label.Root className="text-sm block">Goldfish</Label.Root>
+                <Label.Root className="text-2xl font-serif block">Goldfish x Boban Hand Dish</Label.Root>
+              </div>
+            </div>
+          </Link>
+
+          {/* Two Smaller Projects */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[
+              { name: 'Left Me For Pretzels', image: '/images/left-me-for-pretzels.jpg', link: '/work/left-me-for-pretzels' },
+              { name: 'It’s A Tide Ad', image: '/images/its-a-tide-ad.jpg', link: '/work/its-a-tide-ad' },
+            ].map((project) => (
+              <Link key={project.name} href={project.link} className="block">
+                <div className="relative">
+                  <Image
+                    src={project.image}
+                    alt={project.name}
+                    width={400}
+                    height={300}
+                    className="w-full h-auto object-cover"
+                  />
+                  <div className="absolute bottom-4 left-4 text-white">
+                    <Label.Root className="text-sm block">{project.name.split(' ')[0]}</Label.Root>
+                    <Label.Root className="text-2xl font-serif block">{project.name}</Label.Root>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
     </>
   );
 };
