@@ -3,68 +3,79 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
+import * as Form from '@radix-ui/react-form';
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const router = useRouter();
+  const [error, setError] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const result = await signIn('credentials', {
-        redirect: false,
-        email,
-        password,
-      });
+    const formData = new FormData(e.currentTarget);
+    
+    const result = await signIn('credentials', {
+      email: formData.get('email'),
+      password: formData.get('password'),
+      redirect: false,
+    });
 
-      if (result?.error) {
-        setError(result.error);
-      } else {
-        router.push('/dashboard');
-      }
-    } catch {
-      setError('An unexpected error occurred');
+    if (result?.error) {
+      setError('Invalid credentials');
+    } else {
+      router.push('/dashboard');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-          Email address
-        </label>
-        <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400
-                     focus:outline-none focus:border-black focus:ring-1 focus:ring-black"
-        />
-      </div>
-      <div>
-        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+    <Form.Root onSubmit={handleSubmit} className="space-y-6">
+      {error && (
+        <div className="text-red-500 text-sm text-center">{error}</div>
+      )}
+      <Form.Field name="email">
+        <Form.Label className="block text-sm font-medium text-gray-700">
+          Email
+        </Form.Label>
+        <Form.Control asChild>
+          <input
+            type="email"
+            required
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          />
+        </Form.Control>
+      </Form.Field>
+
+      <Form.Field name="password">
+        <Form.Label className="block text-sm font-medium text-gray-700">
           Password
-        </label>
-        <input
-          id="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm shadow-sm placeholder-gray-400
-                     focus:outline-none focus:border-black focus:ring-1 focus:ring-black"
-        />
+        </Form.Label>
+        <Form.Control asChild>
+          <input
+            type="password"
+            required
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+          />
+        </Form.Control>
+      </Form.Field>
+
+      <div className="flex items-center justify-between">
+        <Link
+          href="/auth/forgot-password"
+          className="text-sm text-indigo-600 hover:text-indigo-500"
+        >
+          Forgot password?
+        </Link>
       </div>
-      {error && <p className="text-red-600 text-sm">{error}</p>}
-      <button 
-        type="submit"
-        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
-      >
-        Login
-      </button>
-    </form>
+
+      <Form.Submit asChild>
+        <button
+          type="submit"
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        >
+          Sign in
+        </button>
+      </Form.Submit>
+    </Form.Root>
   );
 };
 

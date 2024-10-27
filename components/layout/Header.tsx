@@ -68,10 +68,10 @@ const profileLinks = {
   columns: [
     {
       title: 'Account',
-      items: ['My Profile', 'Orders', 'Wishlist', 'Settings'],
+      items: ['My Profile', 'Sign Up', 'Sign In', 'Settings'],
     },
     {
-      title: 'Projects',
+      title: 'My Work', 
       items: ['Alpha+', 'Discount'],
     },
   ],

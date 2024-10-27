@@ -171,3 +171,18 @@ body {
     @apply ml-2;
   }
 }
+
+/* Add these to your existing globals.css */
+@layer utilities {
+  .menu-hover {
+    @apply relative;
+  }
+
+  .menu-hover::after {
+    @apply content-[''] absolute left-0 bottom-0 w-0 h-0.5 bg-black transition-all duration-300;
+  }
+
+  .menu-hover:hover::after {
+    @apply w-full;
+  }
+}

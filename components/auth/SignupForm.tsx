@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import * as Form from '@radix-ui/react-form';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useRouter } from 'next/navigation';
 
 const validationSchema = yup.object({
   email: yup
@@ -22,6 +23,7 @@ const validationSchema = yup.object({
 });
 
 const SignupForm = () => {
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -29,9 +31,23 @@ const SignupForm = () => {
       userType: 'influencer',
     },
     validationSchema: validationSchema,
-    onSubmit: (values) => {
-      // Handle form submission
-      console.log(values);
+    onSubmit: async (values) => {
+      try {
+        // Handle form submission
+        const response = await fetch('/api/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        });
+
+        if (response.ok) {
+          router.push('/auth/login?signup=success');
+        }
+      } catch (error) {
+        console.error('Signup failed:', error);
+      }
     },
   });
 
