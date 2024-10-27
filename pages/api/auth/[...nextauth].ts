@@ -4,6 +4,8 @@ import prisma from '@/lib/prisma';
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import EmailProvider from "next-auth/providers/email";
+import FacebookProvider from 'next-auth/providers/facebook';
+import InstagramProvider from 'next-auth/providers/instagram';
 
 // The global type declaration should be in a separate .d.ts file or at the top level of your project
 // Not needed in this file specifically
@@ -22,6 +24,17 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_ID!,
       clientSecret: process.env.GOOGLE_SECRET!,
+    }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_ID!,
+      clientSecret: process.env.FACEBOOK_SECRET!,
+    }),
+    InstagramProvider({
+      clientId: process.env.INSTAGRAM_ID!,
+      clientSecret: process.env.INSTAGRAM_SECRET!,
+      authorization: {
+        params: { scope: 'basic' }
+      }
     }),
   ],
   session: {
@@ -43,6 +56,17 @@ export const authOptions: NextAuthOptions = {
       // Add any custom token logic here
       return token;
     },
+  },
+  cookies: {
+    sessionToken: {
+      name: `__Secure-next-auth.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: true
+      }
+    }
   },
 };
 

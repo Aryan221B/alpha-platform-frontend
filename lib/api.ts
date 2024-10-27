@@ -14,3 +14,10 @@ export async function getInfluencer(id: string) {
   }
 }
 
+export async function getInfluencerByUsername(username: string) {
+  // Add your implementation here
+  // Example implementation:
+  const response = await fetch(`/api/influencers/${username}`);
+  if (!response.ok) return null;
+  return response.json();
+}
