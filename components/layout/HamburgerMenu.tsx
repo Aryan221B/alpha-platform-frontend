@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { menuVariants, itemVariants } from './menuVariants';
+import * as NavigationMenu from '@radix-ui/react-navigation-menu';
+import * as Separator from '@radix-ui/react-separator';
 
 const menuItems = [
   { name: 'Work', href: '/work' },
@@ -12,80 +13,73 @@ const menuItems = [
 ];
 
 const HamburgerMenu: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
 
   return (
-    <div 
+    <NavigationMenu.Root
       className="relative z-50"
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
-      {/* Hamburger/Cross Icon */}
-      <div className="w-8 h-8 flex items-center justify-center cursor-pointer">
-        <div className="relative w-6 h-6">
-          <motion.span
-            className="absolute top-1/2 left-0 w-6 h-0.5 bg-black transform -translate-y-1/2"
-            animate={isOpen ? {
-              rotate: 45,
-              y: 0
-            } : {
-              rotate: 0,
-              y: -4
-            }}
-            transition={{ duration: 0.2 }}
-          />
-          <motion.span
-            className="absolute top-1/2 left-0 w-6 h-0.5 bg-black transform -translate-y-1/2"
-            animate={isOpen ? {
-              opacity: 0
-            } : {
-              opacity: 1
-            }}
-            transition={{ duration: 0.2 }}
-          />
-          <motion.span
-            className="absolute top-1/2 left-0 w-6 h-0.5 bg-black transform -translate-y-1/2"
-            animate={isOpen ? {
-              rotate: -45,
-              y: 0
-            } : {
-              rotate: 0,
-              y: 4
-            }}
-            transition={{ duration: 0.2 }}
-          />
-        </div>
-      </div>
-
-      {/* Menu Panel */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            variants={menuVariants}
-            initial="closed"
-            animate="open"
-            exit="closed"
-            className="absolute right-0 mt-2 w-64 bg-white shadow-lg rounded-lg overflow-hidden"
+      <NavigationMenu.List>
+        <NavigationMenu.Item>
+          {/* Hamburger Trigger */}
+          <NavigationMenu.Trigger
+            className="cursor-pointer p-2 outline-none"
+            aria-label="Toggle menu"
           >
-            <motion.div className="py-2">
-              {menuItems.map((item) => (
+            <div className="w-6 flex flex-col gap-1.5">
+              <motion.span
+                className="w-full h-0.5 bg-black block"
+                animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
+              />
+              <motion.span
+                className="w-full h-0.5 bg-black block"
+                animate={isOpen ? { opacity: 0 } : { opacity: 1 }}
+              />
+              <motion.span
+                className="w-full h-0.5 bg-black block"
+                animate={isOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }}
+              />
+            </div>
+          </NavigationMenu.Trigger>
+
+          {/* Dropdown Content */}
+          <NavigationMenu.Content
+            className="absolute right-0 mt-2 min-w-[220px] bg-white rounded-md shadow-lg"
+          >
+            <AnimatePresence>
+              {isOpen && (
                 <motion.div
-                  key={item.name}
-                  variants={itemVariants}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
                 >
-                  <Link
-                    href={item.href}
-                    className="block px-4 py-3 text-gray-800 hover:bg-gray-100 transition-colors duration-200"
-                  >
-                    {item.name}
-                  </Link>
+                  {menuItems.map((item, index) => (
+                    <React.Fragment key={item.name}>
+                      <NavigationMenu.Link asChild>
+                        <Link
+                          href={item.href}
+                          className="block px-5 py-2.5 text-sm hover:bg-gray-50 transition-colors duration-150 data-[active]:bg-gray-100 data-[active]:text-black"
+                        >
+                          {item.name}
+                        </Link>
+                      </NavigationMenu.Link>
+                      {index < menuItems.length - 1 && (
+                        <Separator.Root className="h-px bg-gray-100 mx-3" />
+                      )}
+                    </React.Fragment>
+                  ))}
                 </motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+              )}
+            </AnimatePresence>
+          </NavigationMenu.Content>
+        </NavigationMenu.Item>
+      </NavigationMenu.List>
+
+      {/* Viewport for animations */}
+      <NavigationMenu.Viewport className="absolute top-full right-0 w-full" />
+    </NavigationMenu.Root>
   );
 };
 

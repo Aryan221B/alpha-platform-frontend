@@ -6,12 +6,19 @@ import GoogleProvider from "next-auth/providers/google";
 import EmailProvider from "next-auth/providers/email";
 import FacebookProvider from 'next-auth/providers/facebook';
 import InstagramProvider from 'next-auth/providers/instagram';
+import UpstashRedisAdapter from "@next-auth/upstash-redis-adapter"
+import { Redis } from "@upstash/redis"
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+})
 
 // The global type declaration should be in a separate .d.ts file or at the top level of your project
 // Not needed in this file specifically
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: UpstashRedisAdapter(redis),
   providers: [
     EmailProvider({
       server: process.env.EMAIL_SERVER,
