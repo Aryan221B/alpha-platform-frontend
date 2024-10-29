@@ -1,10 +1,11 @@
 import { Metadata } from 'next';
 import { getServerSession } from 'next-auth/next';
 import { redirect } from 'next/navigation';
+import DashboardNav from '@/components/dashboard/DashboardNav';
 
 export const metadata: Metadata = {
   title: 'Dashboard | ALPHA Platform',
-  description: 'Manage your links, products, and content',
+  description: 'Manage your content and settings',
 };
 
 export default async function DashboardLayout({
@@ -15,22 +16,17 @@ export default async function DashboardLayout({
   const session = await getServerSession();
 
   if (!session) {
-    redirect('/login');
+    redirect('/auth/sign-in');
   }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Dashboard Header */}
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-        </div>
-      </header>
-
-      {/* Dashboard Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {children}
-      </main>
+      <div className="flex">
+        <DashboardNav />
+        <main className="flex-1 p-8">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }
