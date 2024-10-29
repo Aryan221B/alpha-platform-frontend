@@ -10,7 +10,7 @@ export class AuthService {
           id: true,
           email: true,
           password: true,
-          type: true,
+          userType: true,
           name: true,
         },
       });

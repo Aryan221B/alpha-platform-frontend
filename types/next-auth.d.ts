@@ -6,7 +6,7 @@ declare module 'next-auth' {
       id: string;
       email: string;
       name: string;
-      type: 'brand' | 'influencer';
+      userType: 'CREATOR' | 'BRAND';
     };
   }
 
@@ -14,6 +14,6 @@ declare module 'next-auth' {
     id: string;
     email: string;
     name: string;
-    type: 'brand' | 'influencer';
+    userType: 'CREATOR' | 'BRAND';
   }
 }

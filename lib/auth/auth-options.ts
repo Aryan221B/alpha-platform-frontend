@@ -30,7 +30,12 @@ export const authOptions: NextAuthOptions = {
           throw new Error(error);
         }
 
-        return user;
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          userType: user.userType,
+        };
       },
     }),
     GoogleProvider({
@@ -56,14 +61,14 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.type = user.type;
+        token.userType = user.userType;
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id;
-        session.user.type = token.type;
+        session.user.userType = token.userType;
       }
       return session;
     },
