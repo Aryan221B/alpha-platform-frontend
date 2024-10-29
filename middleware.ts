@@ -3,9 +3,17 @@ import type { NextRequest } from 'next/server';
 import { Ratelimit } from '@upstash/ratelimit';
 import { Redis } from '@upstash/redis';
 
+// Add this console.log to debug
+console.log('Redis URL:', process.env.UPSTASH_REDIS_REST_URL)
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!
+})
+
 // Create rate limiter
 const ratelimit = new Ratelimit({
-  redis: Redis.fromEnv(),
+  redis: redis,
   limiter: Ratelimit.slidingWindow(10, '10 s'),
 });
 

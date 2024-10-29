@@ -3,6 +3,7 @@ import { Providers } from './providers';
 import HeaderWrapper from '../components/layout/HeaderWrapper';
 import Footer from '../components/layout/Footer';
 import "./globals.css";
+import CookieConsent from '../components/CookieConsent';
 
 export const metadata: Metadata = {
   title: "ALPHA - Connecting Influencers and Brands",

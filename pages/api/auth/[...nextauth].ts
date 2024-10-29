@@ -6,7 +6,7 @@ import GoogleProvider from "next-auth/providers/google";
 import EmailProvider from "next-auth/providers/email";
 import FacebookProvider from 'next-auth/providers/facebook';
 import InstagramProvider from 'next-auth/providers/instagram';
-import UpstashRedisAdapter from "@next-auth/upstash-redis-adapter"
+import { UpstashRedisAdapter } from "@next-auth/upstash-redis-adapter"
 import { Redis } from "@upstash/redis"
 
 const redis = new Redis({
